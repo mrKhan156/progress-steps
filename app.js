@@ -1,10 +1,21 @@
-const open = document.querySelector('#open');
-const close = document.querySelector('#close');
-const container = document.querySelector('.container');
+const loadText = document.querySelector('.loading_text');
+const bg = document.querySelector('.bg');
 
-open.addEventListener('click', function(e){
-    container.classList.add('show-nav');
-})
-close.addEventListener('click', function(e){
-    container.classList.remove('show-nav');
-})
+let load = 0;
+let int = setInterval(blurring,50)
+
+function blurring(){
+    load ++;
+    if(load>99){
+        clearInterval(int);
+    }
+    loadText.innerText = `${load}%`;
+    loadText.style.opacity = scale(load, 0 , 100 , 1, 0)
+    bg.style.filter = `blur(${scale(load, 0, 100, 30, 0)}px)`
+}
+
+// calculation for load and blur mixing , it handles one number bye the value of others. imported from http://stackoverflow.com/questions/
+
+const scale = (num , in_min, in_max, out_min, out_max)=>{
+    return (num - in_min) * (out_max - out_min)/ (in_max - in_min) + out_min;
+}
